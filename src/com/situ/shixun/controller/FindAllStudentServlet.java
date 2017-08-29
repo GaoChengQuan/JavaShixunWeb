@@ -19,8 +19,10 @@ public class FindAllStudentServlet extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		IStudentService studentService = new StudentServiceImpl();
 		List<Student> list = studentService.findAll();
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("/list_student.jsp").forward(req, resp);
 		
-		resp.setContentType("text/html;charset=utf-8");
+		/*resp.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = resp.getWriter();
 		printWriter.print("<a href='/JavaShixunWeb/add_student.html'>添加</a>");
 		printWriter.println("<table align='center' border='1' cellSpacing='0'>");
@@ -45,7 +47,7 @@ public class FindAllStudentServlet extends HttpServlet{
 			printWriter.println("	</tr>");
 		}
 		printWriter.println("</table>");
-		printWriter.close();
+		printWriter.close();*/
 	}
 	
 }
