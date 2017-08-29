@@ -45,4 +45,27 @@
   </servlet-mapping>
   
   
+  
+  <servlet>
+  	<servlet-name>ToUpdateStudent</servlet-name>
+  	<servlet-class>com.situ.shixun.controller.ToUpdateStudentServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ToUpdateStudent</servlet-name>
+  	<url-pattern>/toUpdateStudent</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>UpdateStudent</servlet-name>
+  	<servlet-class>com.situ.shixun.controller.UpdateStudentServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>UpdateStudent</servlet-name>
+  	<url-pattern>/updateStudent</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

@@ -12,4 +12,8 @@ public interface IStudentService {
 
 	boolean deletById(int parseInt);
 
+	Student findById(int id);
+
+	boolean update(Student student);
+
 }

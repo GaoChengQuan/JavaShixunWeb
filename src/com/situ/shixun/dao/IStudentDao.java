@@ -27,6 +27,8 @@ public interface IStudentDao {
 	 * 
 	 */
 	public abstract boolean checkName(String name);
+
+	public abstract Student findById(int id);
 	
 
 }

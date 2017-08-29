@@ -77,8 +77,35 @@ public class StudentDaoImpl implements IStudentDao{
 
 	@Override
 	public boolean update(Student student) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		boolean isSuccess = false;
+		//2、获取连接对象Connection。
+		try {
+			connection = JdbcUtil.getConnection();
+			//3、写sql语句。
+			String sql = "UPDATE student SET NAME=?,age=?,gender=?,address=? WHERE id=?;";
+			//4、创建Satement。
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, student.getName());
+			statement.setInt(2, student.getAge());
+			statement.setString(3, student.getGender());
+			statement.setString(4, student.getAddress());
+			statement.setInt(5, student.getId());
+			//5、执行sql语句。
+			//  更新：delete/update/insert   executeUpdate   返回值int表示影响的行数。
+			//  查询：select                         executeQuery       返回结果集ResultSet。
+			int result  = statement.executeUpdate();
+			if (result > 0) {
+				isSuccess = true;
+			}
+			System.out.println(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(statement, connection);
+		}
+		return isSuccess;
 	}
 
 	@Override
@@ -164,6 +191,43 @@ public class StudentDaoImpl implements IStudentDao{
 		}
 		
 		return false;
+	}
+
+	@Override
+	public Student findById(int idSearch) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		//2、获取连接对象Connection。
+		try {
+			connection = JdbcUtil.getConnection();
+			//3、写sql语句。
+			String sql = "SELECT * FROM student where id=?;";
+			//4、创建Satement。
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, idSearch);
+			//5、执行sql语句。
+			//  更新：delete/update/insert   executeUpdate   返回值int表示影响的行数。
+			//  查询：select                         executeQuery       返回结果集ResultSet。
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				int age = resultSet.getInt("age");
+				String gender = resultSet.getString("gender");
+				String address = resultSet.getString("address");
+				Student student = new Student(id, name, age, gender, address);
+				System.out.println(student);
+				return student;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//6、关闭
+			JdbcUtil.close(resultSet, statement, connection);
+		}
+		
+		return null;
 	}
 
 }
