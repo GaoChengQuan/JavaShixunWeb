@@ -68,4 +68,15 @@
   </servlet-mapping>
   
   
+  <servlet>
+  	<servlet-name>SearchByName</servlet-name>
+  	<servlet-class>com.situ.shixun.controller.SearchByNameServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SearchByName</servlet-name>
+  	<url-pattern>/searchByName</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

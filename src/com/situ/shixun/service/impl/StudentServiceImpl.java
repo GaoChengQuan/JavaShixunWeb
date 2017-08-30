@@ -41,4 +41,9 @@ public class StudentServiceImpl implements IStudentService{
 		return studentDao.update(student);
 	}
 
+	@Override
+	public List<Student> findByName(String nameSearch) {
+		return studentDao.findByName(nameSearch);
+	}
+
 }

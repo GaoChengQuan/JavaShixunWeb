@@ -16,4 +16,6 @@ public interface IStudentService {
 
 	boolean update(Student student);
 
+	List<Student> findByName(String nameSearch);
+
 }

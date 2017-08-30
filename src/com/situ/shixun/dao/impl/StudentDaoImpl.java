@@ -42,9 +42,10 @@ public class StudentDaoImpl implements IStudentDao{
 		} finally {
 			JdbcUtil.close(statement, connection);
 		}
+		
 		return isSuccess;
 	}
-
+	
 	@Override
 	public boolean deleteById(int id) {
 		Connection connection = null;
@@ -146,9 +147,41 @@ public class StudentDaoImpl implements IStudentDao{
 	}
 
 	@Override
-	public List<Student> findByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Student> findByName(String nameSearch) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		List<Student> list = new ArrayList<Student>();
+		//2、获取连接对象Connection。
+		try {
+			connection = JdbcUtil.getConnection();
+			//3、写sql语句。
+			String sql = "SELECT * FROM student where name like ?;";
+			//4、创建Satement。
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, "%" + nameSearch + "%");
+			//5、执行sql语句。
+			//  更新：delete/update/insert   executeUpdate   返回值int表示影响的行数。
+			//  查询：select                         executeQuery       返回结果集ResultSet。
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				int age = resultSet.getInt("age");
+				String gender = resultSet.getString("gender");
+				String address = resultSet.getString("address");
+				Student student = new Student(id, name, age, gender, address);
+				System.out.println(student);
+				list.add(student);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//6、关闭
+			JdbcUtil.close(resultSet, statement, connection);
+		}
+		
+		return list;
 	}
 
 	@Override
